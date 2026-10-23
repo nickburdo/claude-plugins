@@ -1,0 +1,14 @@
+{
+  "name": "nickburdo-plugins",
+  "description": "Claude Code plugins by nickburdo: development workflow skills, agents and hooks.",
+  "owner": {
+    "name": "nickburdo"
+  },
+  "plugins": [
+    {
+      "name": "dev-workflow",
+      "source": "./plugins/dev-workflow",
+      "description": "Plan-first development workflow: start-task and finish-task skills, PR descriptions, a browser-checker agent and a hook that blocks edits on protected branches."
+    }
+  ]
+}

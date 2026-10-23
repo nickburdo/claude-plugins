@@ -1,0 +1,16 @@
+{
+  "description": "Blocks Edit/Write/NotebookEdit on project files that git does not ignore (including new files) while a protected branch is checked out.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/block-edits-on-protected-branch.mjs\""
+          }
+        ]
+      }
+    ]
+  }
+}
