@@ -11,7 +11,7 @@ a browser check for UI changes and an updated plan.
 | Skill | `dev-workflow:start-task` | Clarifies requirements, creates the task branch, writes the plan (plan file, optional roadmap and done-log items) and waits for approval. |
 | Skill | `dev-workflow:finish-task` | Runs the check commands, a code review and (for UI changes) a browser check, then marks the plan, done-log and roadmap items. Check failures and review issues that already exist on the main branch do not block it: after the user confirms them, they are offered as backlog items. |
 | Skill | `dev-workflow:pr-description` | Writes a PR description from the branch diff and creates the PR with `gh`. |
-| Agent | `dev-workflow:browser-checker` | Checks the running app in a real browser via Playwright MCP: widths, light/dark theme, overflow, console errors. Never edits code. |
+| Agent | `dev-workflow:browser-checker` | Checks the running app in a real browser via Playwright MCP: widths, light/dark theme, overflow, console errors. Runs a `full` or `short` check, as chosen in the plan (`full` by default). Never edits code and does not change app data (delete, import, reset) unless a plan scenario asks for it. |
 | Hook | `PreToolUse` on `Edit\|Write\|NotebookEdit` | Blocks edits to project files that git does not ignore (including new files) while a protected branch (default `main`, `master`) is checked out. |
 
 ## Install
@@ -60,7 +60,7 @@ for the browser-checker agent (rendering, styling, themes, components worth chec
 | `checkCommands` | Commands that must pass before a task is closed. |
 | `uiPaths` | Globs of files whose changes need a browser check. |
 | `devServer` | `command` and `port` of the dev server for the browser check. |
-| `viewportWidths` | Widths (px) the browser check always covers. |
+| `viewportWidths` | Widths (px) the full browser check always covers. |
 | `codeReviewLevel` | Level passed to the `code-review` skill. |
 | `commitMode` | When the workflow commits: `manual` (default; never, the user commits after finish-task), `per-step` (after each plan task) or `at-end` (one commit at the end of finish-task). The skills never push or create PRs. If the project's own instructions set a different commit policy, start-task asks which one the task follows and writes it into the plan. |
 
