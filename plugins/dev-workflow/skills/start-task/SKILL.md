@@ -13,7 +13,12 @@ When the user asks for new work:
 2. Clarify requirements with `AskUserQuestion`. In the same call:
    - ask to confirm a proposed branch name: `<type>/<short-kebab-name>`;
    - for a `code` type, if it is not obvious, ask which step of `config.roadmapFile` and which stage of `config.doneLogFile` the item belongs to.
-3. If the working tree has uncommitted changes, stop and ask what to do with them. Then switch to `config.mainBranch`, pull it with `--ff-only` and create the confirmed branch from it. Never reuse a merged or unrelated branch.
+3. If the working tree has uncommitted changes, stop and ask what to do with them. Then:
+   - switch to `config.mainBranch`;
+   - update it with `git fetch` and then `git merge --ff-only '@{u}'` (keep the quotes: PowerShell parses a bare `@{u}` as a hashtable). Do not use `git pull`: it follows the user's `pull.*` settings and fails with `pull.rebase` on a dirty tree;
+   - create the confirmed branch from it. Never reuse a merged or unrelated branch.
+
+   If any of these commands fails, stop and report its output; do not stash, reset or rebase on your own.
 4. Check `config.backlogFile` for an item that matches or overlaps the task. If one is found, the plan names it and the action for it (delete / narrow / mark as partly done): for a `code` type as a `- [ ]` step in the plan task that changes the docs (add such a task if there is none), for a `chore` type in the chat plan.
 5. Write the plan:
    - **`code` type:**
