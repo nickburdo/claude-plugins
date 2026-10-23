@@ -9,7 +9,7 @@ a browser check for UI changes and an updated plan.
 | Component | Name in Claude Code | What it does |
 | --- | --- | --- |
 | Skill | `dev-workflow:start-task` | Clarifies requirements, creates the task branch, writes the plan (plan file, optional roadmap and done-log items) and waits for approval. |
-| Skill | `dev-workflow:finish-task` | Runs the check commands, a code review and (for UI changes) a browser check, then marks the plan, done-log and roadmap items. |
+| Skill | `dev-workflow:finish-task` | Runs the check commands, a code review and (for UI changes) a browser check, then marks the plan, done-log and roadmap items. Check failures and review issues that already exist on the main branch do not block it: after the user confirms them, they are offered as backlog items. |
 | Skill | `dev-workflow:pr-description` | Writes a PR description from the branch diff and creates the PR with `gh`. |
 | Agent | `dev-workflow:browser-checker` | Checks the running app in a real browser via Playwright MCP: widths, light/dark theme, overflow, console errors. Never edits code. |
 | Hook | `PreToolUse` on `Edit\|Write\|NotebookEdit` | Blocks edits to project files that git does not ignore (including new files) while a protected branch (default `main`, `master`) is checked out. |
