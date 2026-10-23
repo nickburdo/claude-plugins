@@ -30,6 +30,10 @@ devServer:
 viewportWidths: [390, 768, 1024, 1280]
 # Level passed to the code-review skill from finish-task (low | medium | high | xhigh | max).
 codeReviewLevel: medium
+# When the workflow commits: manual (never; the user commits after finish-task),
+# per-step (one commit after each plan task), at-end (one commit at the end of finish-task).
+# The skills never push or create PRs.
+commitMode: manual
 ---
 
 # Project notes for dev-workflow

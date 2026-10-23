@@ -9,10 +9,12 @@ When the user asks for new work:
    - Write every question, report and plan in `config.language`. Code and code comments stay in English unless the project says otherwise.
    - `config.roadmapFile`, `config.doneLogFile` and `config.backlogFile` are optional: when one is empty or missing, skip only the sub-steps and questions that read or change that file; the rest of every step still runs.
    - The hook lets you create or edit `.claude/dev-workflow.md` on a protected branch; other files wait for the task branch.
+   - `config.commitMode` (`manual` | `per-step` | `at-end`) sets when the workflow commits; when it is empty or missing, use `manual`.
 1. Decide the task type from `config.branchTypes`: a `code` type (app behaviour changes, e.g. `feat` / `fix`) or a `chore` type (tooling, docs, config, e.g. `chore` / `docs`).
 2. Clarify requirements with `AskUserQuestion`. In the same call:
    - ask to confirm a proposed branch name: `<type>/<short-kebab-name>`;
-   - for a `code` type, if it is not obvious, ask which step of `config.roadmapFile` and which stage of `config.doneLogFile` the item belongs to.
+   - for a `code` type, if it is not obvious, ask which step of `config.roadmapFile` and which stage of `config.doneLogFile` the item belongs to;
+   - if the project's instructions (for example `CLAUDE.md`) set a commit policy that contradicts `config.commitMode`, ask which one this task follows.
 3. If the working tree has uncommitted changes, stop and ask what to do with them. Then:
    - switch to `config.mainBranch`;
    - update it with `git fetch` and then `git merge --ff-only '@{u}'` (keep the quotes: PowerShell parses a bare `@{u}` as a hashtable). Do not use `git pull`: it follows the user's `pull.*` settings and fails with `pull.rebase` on a dirty tree;
@@ -29,7 +31,13 @@ When the user asks for new work:
    - Delete template lines for optional files the config does not set.
    - Every task that changes `CLAUDE.md` or project docs has a `**Why:**` line with one sentence on why the change is needed.
    - Every risky task (app logic, data, hooks, or other risky changes) is marked `**Stop:** yes`, in chat plans too; execution stops after it for the user's confirmation.
-6. Report to the user and stop. List any open proposals that need an explicit answer.
-7. After the user approves, set the plan status to `✅ Approved by the user <YYYY-MM-DD>` (plans saved to a file only).
+   - Every plan, in a file or in the chat, has a `**Commits:**` line worded as in [plan-template.md](plan-template.md), with the commit policy from `config.commitMode` (or the answer from step 2) and the commit message rule (the project's rules; without them, `<type>: <short summary>` with the branch type):
+     - `manual` — no commits, the user commits after finish-task;
+     - `per-step` — one commit after each task: Task 0 once the plan is approved; a task marked `**Stop:** yes` only after the user confirms it, with any rework in the same commit; the last task (verification and wrap-up) gets no commit of its own, finish-task makes the final one;
+     - `at-end` — one commit at the end of finish-task.
 
-Do not write code before the plan is approved. Do not commit or push.
+     finish-task reads this line.
+6. Report to the user and stop. List any open proposals that need an explicit answer.
+7. After the user approves, set the plan status to `✅ Approved by the user <YYYY-MM-DD>` (plans saved to a file only). With `per-step` commits, then commit Task 0's changes (the plan file, roadmap and done-log items), if there are any.
+
+Do not write code before the plan is approved. Commit only as the plan's `**Commits:**` line says; never push or create a PR.

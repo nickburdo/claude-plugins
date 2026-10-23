@@ -62,6 +62,7 @@ for the browser-checker agent (rendering, styling, themes, components worth chec
 | `devServer` | `command` and `port` of the dev server for the browser check. |
 | `viewportWidths` | Widths (px) the browser check always covers. |
 | `codeReviewLevel` | Level passed to the `code-review` skill. |
+| `commitMode` | When the workflow commits: `manual` (default; never, the user commits after finish-task), `per-step` (after each plan task) or `at-end` (one commit at the end of finish-task). The skills never push or create PRs. If the project's own instructions set a different commit policy, start-task asks which one the task follows and writes it into the plan. |
 
 A complete real-world example: [templates/dev-workflow.health-monitor.md](templates/dev-workflow.health-monitor.md).
 

@@ -16,6 +16,7 @@ devServer:
   port: 3030
 viewportWidths: [390, 641, 900, 1001, 1280]
 codeReviewLevel: medium
+commitMode: manual
 ---
 
 # Project notes for dev-workflow

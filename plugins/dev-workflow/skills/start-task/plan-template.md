@@ -5,7 +5,9 @@
 >
 > **For executing agents:** use superpowers:executing-plans (if available) to carry out the plan task by task. Steps use checkbox syntax (`- [ ]`). **No TDD**: automated tests are not written unless explicitly requested. Code review and the browser check (if UI is touched) are done by the finish-task skill in the last task.
 >
-> **Stops (mandatory):** tasks run back to back. Stop, report briefly and wait for explicit user confirmation only: (1) after a task marked `**Stop:** yes` (app logic, data, hooks and other risky changes); (2) on a deviation from the plan or an open question — before continuing; (3) before an irreversible step (commit, push, PR, deletion). finish-task stops before the commit.
+> **Stops (mandatory):** tasks run back to back. Stop, report briefly and wait for explicit user confirmation only: (1) after a task marked `**Stop:** yes` (app logic, data, hooks and other risky changes); (2) on a deviation from the plan or an open question — before continuing; (3) before an irreversible step (deletion; a commit too, unless the commit policy below makes it). With `manual` commits, finish-task stops before the commit.
+>
+> **Commits:** <one of: `manual` — no commits, the user commits after finish-task / `per-step` — one commit after each task: Task 0 once the plan is approved; a task marked `**Stop:** yes` only after the user confirms it, with any rework in the same commit; the last task gets no commit of its own, finish-task makes the final one / `at-end` — one commit at the end of finish-task>. Commit messages: <the project's rules, or `<type>: <short summary>` with the branch type>. Never amend, reset or squash existing commits. Never push or create a PR.
 
 **Goal:** <one or two sentences: what the user gets>
 
