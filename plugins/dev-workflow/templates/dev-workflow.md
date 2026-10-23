@@ -26,7 +26,7 @@ uiPaths: ["src/**/*.vue", "src/**/*.css"]
 devServer:
   command: npm run dev
   port: 3000
-# Viewport widths (px) the browser-checker agent always checks.
+# Viewport widths (px) the browser-checker agent always checks in a full check.
 viewportWidths: [390, 768, 1024, 1280]
 # Level passed to the code-review skill from finish-task (low | medium | high | xhigh | max).
 codeReviewLevel: medium

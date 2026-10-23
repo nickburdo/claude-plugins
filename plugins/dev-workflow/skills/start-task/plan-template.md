@@ -51,5 +51,5 @@ Done by the finish-task skill once, after all plan tasks.
 
 - [ ] Check commands: <config.checkCommands>.
 - [ ] Code review of the branch changes (separate subagent); go through the findings with the user: fix, backlog or reject.
-- [ ] Browser check by the browser-checker agent (only if UI is touched) with scenarios: <scenarios, narrow screen, both themes>.
+- [ ] Browser check by the browser-checker agent (only if UI is touched) — scope: <one of: `full` (scenarios: <scenarios, narrow screen, both themes>) / `short` (scenarios: <scenarios, with widths and themes if they matter>) / `none` (reason: <why no browser check is needed>)>. <!-- leave the scope out if the user was not asked; `none` only from the user's answer; mark each scenario that changes app data as `changes data: <what>` -->
 - [ ] Mark completion in `<config.doneLogFile>` and `<config.roadmapFile>`. <!-- only for the files config sets -->
